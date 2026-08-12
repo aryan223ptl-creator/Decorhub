@@ -225,7 +225,7 @@
             position: absolute;
 
             left: 50%;
-            bottom: 24px;
+            bottom: 50px; /* Raised slightly to give room for the footer */
             transform: translateX(-50%);
 
             z-index: 10;
@@ -506,6 +506,28 @@
 
 
         /* =========================
+           FOOTER
+        ========================== */
+
+        .site-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.65);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            letter-spacing: 0.3px;
+        }
+
+
+        /* =========================
            MOBILE RESPONSIVE FIXES
         ========================== */
 
@@ -533,19 +555,17 @@
             .music-player {
                 left: 50%;
                 right: auto;
-                bottom: 16px;
+                bottom: 42px; /* Lifted slightly above footer */
                 transform: translateX(-50%);
 
-                /* Expand width to comfortably fit mobile screens */
-                width: calc(100vw - 24px);
+                width: calc(100vw - 20px);
                 max-width: 380px;
 
-                /* Convert to a wrapping layout so elements don't get forced off-screen */
                 flex-wrap: wrap;
-                gap: 10px;
+                gap: 8px;
 
-                padding: 12px;
-                border-radius: 20px; /* Softer rounded corners for stacked layout */
+                padding: 10px;
+                border-radius: 16px;
             }
 
             .album-wrapper {
@@ -554,19 +574,17 @@
             }
 
             .song-info {
-                /* Take up remaining space next to album cover */
                 flex: 1;
                 min-width: 0;
             }
 
-            /* Move controls to a neat full-width row underneath on small screens */
             .music-controls {
                 width: 100%;
                 justify-content: center;
                 gap: 12px;
                 margin-top: 2px;
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
-                padding-top: 8px;
+                padding-top: 6px;
             }
 
             .control-btn {
@@ -589,12 +607,17 @@
             }
 
             .progress-area {
-                margin-top: 6px;
+                margin-top: 5px;
             }
 
             .time {
                 font-size: 10px;
-                margin-top: 4px;
+                margin-top: 3px;
+            }
+
+            .site-footer {
+                font-size: 10px;
+                padding: 6px 0;
             }
         }
 
@@ -876,6 +899,14 @@
         </div>
 
 
+        <!-- =========================
+             FOOTER
+        ========================== -->
+        <footer class="site-footer">
+            &copy; <span id="currentYear"></span> DecorHub. All rights reserved.
+        </footer>
+
+
     </main>
 
 
@@ -890,6 +921,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
     <script>
+        // Set dynamic current year in footer
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
 
         const audio = document.getElementById("audioPlayer");
 
