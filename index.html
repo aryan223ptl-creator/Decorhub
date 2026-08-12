@@ -59,8 +59,6 @@
                 /* Switch to your mobile-optimized vertical image */
                 background-image: url("background-mobile.png");
                 
-                /* You can use 'contain' if you want the whole image to fit without cropping, 
-                   or keep 'cover' if the mobile image is already designed in a 9:16 portrait ratio */
                 background-size: cover; 
                 background-position: center;
             }
@@ -88,9 +86,6 @@
         .logo-container {
             position: absolute;
 
-            /*
-             * Logo moved slightly UP
-             */
             top: 14px;
             left: 50%;
 
@@ -106,7 +101,6 @@
         }
 
         .logo {
-            /* Logo made slightly smaller */
             width: min(140px, 35vw);
             max-width: 140px;
             height: auto;
@@ -512,7 +506,7 @@
 
 
         /* =========================
-           MOBILE RESPONSIVE
+           MOBILE RESPONSIVE FIXES
         ========================== */
 
         @media (max-width: 768px) {
@@ -522,7 +516,6 @@
                 display: none;
             }
 
-            /* Adjust menu container position since clock is hidden */
             .menu-container {
                 top: 20px;
             }
@@ -536,46 +529,73 @@
                 max-width: 115px;
             }
 
+            /* Adjust player layout for mobile to prevent cutoff */
             .music-player {
                 left: 50%;
                 right: auto;
                 bottom: 16px;
                 transform: translateX(-50%);
 
-                width: min(360px, calc(100vw - 30px));
+                /* Expand width to comfortably fit mobile screens */
+                width: calc(100vw - 24px);
+                max-width: 380px;
 
-                gap: 8px;
+                /* Convert to a wrapping layout so elements don't get forced off-screen */
+                flex-wrap: wrap;
+                gap: 10px;
 
-                padding: 8px 12px 8px 8px;
+                padding: 12px;
+                border-radius: 20px; /* Softer rounded corners for stacked layout */
             }
 
             .album-wrapper {
-                width: 50px;
-                height: 50px;
+                width: 45px;
+                height: 45px;
             }
 
+            .song-info {
+                /* Take up remaining space next to album cover */
+                flex: 1;
+                min-width: 0;
+            }
+
+            /* Move controls to a neat full-width row underneath on small screens */
             .music-controls {
-                gap: 0;
+                width: 100%;
+                justify-content: center;
+                gap: 12px;
+                margin-top: 2px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding-top: 8px;
             }
 
             .control-btn {
-                width: 32px;
-                height: 32px;
+                width: 34px;
+                height: 34px;
             }
 
             .play-btn {
-                width: 40px;
-                height: 40px;
+                width: 38px;
+                height: 38px;
             }
 
             .song-title {
-                font-size: 13px;
+                font-size: 12px;
             }
 
             .song-artist {
-                font-size: 11px;
+                font-size: 10px;
+                margin-top: 2px;
             }
 
+            .progress-area {
+                margin-top: 6px;
+            }
+
+            .time {
+                font-size: 10px;
+                margin-top: 4px;
+            }
         }
 
 
@@ -909,10 +929,10 @@
                 cover: "covers/N0jnLZxYwYc.jpg"
             },
             {
-                title: "Aam Gotu Tem Gotu", // Change to your second song's title
-                artist: "Song by Damayanti Bardai", // Change to your second song's artist
+                title: "Aam Gotu Tem Gotu", 
+                artist: "Song by Damayanti Bardai", 
                 src: "song2.aac",
-                cover: "covers/images.jpg" // Change cover image path if needed
+                cover: "covers/images.jpg" 
             }
         ];
 
@@ -1119,14 +1139,6 @@
         const viewerCount =
             document.getElementById("viewerCount");
 
-        /*
-         * The number always stays between
-         * 30 and 100.
-         *
-         * It changes automatically every
-         * 10 seconds.
-         */
-
         let displayedViewers =
             Math.floor(Math.random() * 71) + 30;
 
@@ -1135,12 +1147,6 @@
 
 
         function updateViewerCount() {
-
-            /*
-             * Create a new random number
-             * between 30 and 100.
-             */
-
             const newViewers =
                 Math.floor(Math.random() * 71) + 30;
 
@@ -1150,11 +1156,6 @@
             viewerCount.textContent =
                 displayedViewers;
         }
-
-
-        /*
-         * Change the number every 10 seconds.
-         */
 
         setInterval(
             updateViewerCount,
