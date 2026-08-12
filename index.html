@@ -26,11 +26,12 @@
         body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            overflow-x: hidden; /* Prevent horizontal scrolling glitches */
         }
 
         body {
             font-family: Arial, sans-serif;
+            background-color: #000; /* Fallback background */
         }
 
 
@@ -41,7 +42,7 @@
         .homepage {
             position: relative;
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
 
             background-image: url("background.png");
@@ -55,12 +56,19 @@
         ========================== */
 
         @media (max-width: 768px) {
+            html,
+            body {
+                overflow-y: auto; /* Allow proper vertical scrolling on mobile phones */
+            }
+
             .homepage {
                 /* Switch to your mobile-optimized vertical image */
                 background-image: url("background-mobile.png");
                 
                 background-size: cover; 
                 background-position: center;
+                min-height: 100vh;
+                padding-bottom: 70px; /* Gives clearance space so content doesn't crash into the footer */
             }
         }
 
@@ -225,7 +233,7 @@
             position: absolute;
 
             left: 50%;
-            bottom: 50px; /* Raised slightly to give room for the footer */
+            bottom: 50px; 
             transform: translateX(-50%);
 
             z-index: 10;
@@ -516,10 +524,10 @@
             width: 100%;
             z-index: 10;
             text-align: center;
-            padding: 8px 0;
+            padding: 10px 0;
             font-size: 11px;
             color: rgba(255, 255, 255, 0.65);
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -551,11 +559,11 @@
                 max-width: 115px;
             }
 
-            /* Adjust player layout for mobile to prevent cutoff */
+            /* Adjust player layout for mobile */
             .music-player {
                 left: 50%;
                 right: auto;
-                bottom: 42px; /* Lifted slightly above footer */
+                bottom: 45px; /* Sits safely right above the footer */
                 transform: translateX(-50%);
 
                 width: calc(100vw - 20px);
@@ -617,7 +625,7 @@
 
             .site-footer {
                 font-size: 10px;
-                padding: 6px 0;
+                padding: 8px 0;
             }
         }
 
