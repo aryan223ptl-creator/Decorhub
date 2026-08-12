@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - DecorHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .contact-page {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-image: url("background.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-page {
+                background-image: url("background-mobile.png");
+            }
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+
+        .content-container {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(24px) saturate(150%);
+            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.30);
+        }
+
+        .tagline {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffdf7e;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: black;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.30);
+            transition: transform 0.2s ease, background 0.2s ease;
+            margin-top: 5px;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Success Popup Modal Overlay */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-box {
+            background: rgba(30, 30, 30, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 340px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .popup-overlay.active .popup-box {
+            transform: scale(1);
+        }
+
+        .popup-box h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #ffdf7e;
+        }
+
+        .popup-box p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+        }
+
+        .popup-btn {
+            padding: 10px 24px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .popup-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <main class="contact-page">
+        <div class="overlay"></div>
+
+        <div class="content-container">
+            <h1>Contact Us</h1>
+            <div class="tagline">✨ DECORATION ON RENT ✨</div>
+
+            <!-- Form with JavaScript fetch handling to prevent page redirection -->
+            <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/thedecorhub2214@gmail.com" method="POST">
+                
+                <!-- Disable Captcha (Optional) -->
+                <input type="hidden" name="_captcha" value="false">
+
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="event">Event Type</label>
+                    <input type="text" id="event" name="event_type" placeholder="e.g. Wedding, Haldi, Mandir setup">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message / Requirements</label>
+                    <textarea id="message" name="message" required placeholder="Tell us your date and decor requirements..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Send Inquiry</button>
+            </form>
+
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <!-- Success Popup Modal -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-box">
+            <h3>Success!</h3>
+            <p>Your Inquiry has been sent successfully. We will get back to you soon!</p>
+            <button class="popup-btn" id="popupCloseBtn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupCloseBtn = document.getElementById('popupCloseBtn');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop normal form redirect submission
+
+            submitBtn.textContent = "Sending...";
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+
+            // Use FormSubmit's AJAX endpoint
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    popupOverlay.classList.add('active'); // Show custom popup
+                    contactForm.reset(); // Clear form fields
+                } else {
+                    alert("Oops! Something went wrong, please try again.");
+                }
+            })
+            .catch(error => {
+                alert("Network error. Please check your connection.");
+            })
+            .finally(() => {
+                submitBtn.textContent = "Send Inquiry";
+                submitBtn.disabled = false;
+            });
+        });
+
+        // Close popup when clicking OK
+        popupCloseBtn.addEventListener('click', function() {
+            popupOverlay.classList.remove('active');
+        });
+
+        // Close popup when clicking outside the popup box
+        popupOverlay.addEventListener('click', function(e) {
+            if (e.target === popupOverlay) {
+                popupOverlay.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
